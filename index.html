@@ -1,443 +1,445 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Danah Al-Sarrani - AI Engineer</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #fffdf9;
-    --bg2: #fff8f0;
-    --bg3: #fff0e0;
-    --border: #f0e4d0;
-    --text: #1a1209;
-    --muted: #8a7560;
-    --accent1: #ff6b35;
-    --accent2: #7c3aed;
-    --accent3: #059669;
-    --accent4: #db2777;
-    --accent5: #2563eb;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; }
-  body { background:var(--bg); color:var(--text); font-family:'Plus Jakarta Sans',sans-serif; overflow-x:hidden; }
-  body::before {
-    content:'';
-    position:fixed;
-    inset:0;
-    background-image:
-      radial-gradient(circle, rgba(255,107,53,0.08) 1px, transparent 1px),
-      radial-gradient(circle, rgba(124,58,237,0.06) 1px, transparent 1px),
-      radial-gradient(circle, rgba(5,150,105,0.06) 1px, transparent 1px);
-    background-size: 60px 60px, 90px 90px, 120px 120px;
-    background-position: 0 0, 30px 30px, 60px 60px;
-    pointer-events:none;
-    z-index:0;
-  }
-  nav {
-    position:fixed; top:0; left:0; right:0; z-index:100;
-    padding:16px 60px;
-    display:flex; justify-content:space-between; align-items:center;
-    background:rgba(255,253,249,0.88);
-    backdrop-filter:blur(12px);
-    border-bottom:1.5px solid var(--border);
-  }
-  .nav-logo { font-family:'DM Mono',monospace; font-size:0.82rem; color:var(--accent1); letter-spacing:0.05em; font-weight:500; }
-  .nav-links { display:flex; gap:32px; list-style:none; }
-  .nav-links a { font-size:0.85rem; font-weight:600; color:var(--muted); text-decoration:none; transition:color 0.2s; letter-spacing:0.01em; }
-  .nav-links a:hover { color:var(--accent1); }
-  .hero { min-height:100vh; display:flex; align-items:center; padding:120px 60px 80px; position:relative; z-index:1; }
-  .hero-content { max-width:780px; }
-  .hero-greeting { display:inline-flex; align-items:center; gap:10px; background:var(--bg3); border:1.5px solid var(--border); border-radius:99px; padding:8px 18px; font-size:0.82rem; font-weight:700; color:var(--accent1); letter-spacing:0.05em; margin-bottom:28px; }
-  .dot { width:8px; height:8px; border-radius:50%; background:var(--accent3); animation:blink 2s ease-in-out infinite; }
-  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .hero h1 { font-size:clamp(2.8rem,6.5vw,5rem); font-weight:800; line-height:1.05; letter-spacing:-0.03em; margin-bottom:8px; }
-  .hero h1 em { font-style:normal; background:linear-gradient(135deg, var(--accent1), var(--accent4)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
-  .hero-sub { font-size:1.05rem; color:var(--muted); margin:24px 0 44px; line-height:1.75; max-width:520px; font-weight:500; }
-  .hero-cta { display:flex; gap:14px; flex-wrap:wrap; }
-  .btn { font-size:0.85rem; font-weight:700; padding:13px 28px; border-radius:99px; text-decoration:none; transition:all 0.2s; display:inline-flex; align-items:center; gap:8px; letter-spacing:0.01em; }
-  .btn-primary { background:var(--accent1); color:#fff; box-shadow:0 4px 0 #c44a1a; }
-  .btn-primary:hover { transform:translateY(-2px); box-shadow:0 6px 0 #c44a1a; }
-  .btn-primary:active { transform:translateY(2px); box-shadow:0 2px 0 #c44a1a; }
-  .btn-outline { border:2px solid var(--border); color:var(--muted); background:var(--bg); }
-  .btn-outline:hover { border-color:var(--accent2); color:var(--accent2); transform:translateY(-2px); }
-  .blob { position:absolute; border-radius:50%; pointer-events:none; animation:float 6s ease-in-out infinite; }
-  .blob-1 { width:280px; height:280px; top:15%; right:8%; background:radial-gradient(circle, rgba(255,107,53,0.1), transparent 70%); animation-delay:0s; }
-  .blob-2 { width:200px; height:200px; bottom:25%; right:20%; background:radial-gradient(circle, rgba(124,58,237,0.1), transparent 70%); animation-delay:-2s; }
-  .blob-3 { width:160px; height:160px; top:40%; right:30%; background:radial-gradient(circle, rgba(219,39,119,0.08), transparent 70%); animation-delay:-4s; }
-  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)} }
-  .stats { position:relative; z-index:1; padding:40px 60px; display:flex; gap:0; background:var(--bg); border-top:1.5px solid var(--border); border-bottom:1.5px solid var(--border); flex-wrap:wrap; }
-  .stat-item { flex:1; min-width:150px; padding:16px 32px; border-right:1.5px solid var(--border); display:flex; flex-direction:column; gap:6px; }
-  .stat-item:last-child { border-right:none; }
-  .stat-value { font-size:2rem; font-weight:800; letter-spacing:-0.03em; }
-  .stat-value.c1 { color:var(--accent1); }
-  .stat-value.c2 { color:var(--accent2); }
-  .stat-value.c3 { color:var(--accent3); }
-  .stat-value.c4 { color:var(--accent4); }
-  .stat-label { font-size:0.78rem; font-weight:600; color:var(--muted); letter-spacing:0.04em; text-transform:uppercase; }
-  section { position:relative; z-index:1; padding:100px 60px; }
-  .section-header { display:flex; align-items:center; gap:16px; margin-bottom:56px; }
-  .section-pill { background:var(--bg3); border:1.5px solid var(--border); border-radius:99px; padding:6px 16px; font-size:0.72rem; font-weight:700; color:var(--accent1); letter-spacing:0.08em; text-transform:uppercase; white-space:nowrap; }
-  .section-title { font-size:2rem; font-weight:800; letter-spacing:-0.02em; }
-  .section-line { flex:1; height:1.5px; background:var(--border); }
-  .projects-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:20px; }
-  .project-card { background:var(--bg); border:1.5px solid var(--border); border-radius:20px; padding:32px; transition:all 0.25s; position:relative; overflow:hidden; }
-  .project-card::before { content:''; position:absolute; top:-40px; right:-40px; width:120px; height:120px; border-radius:50%; opacity:0.08; transition:opacity 0.3s; }
-  .project-card.p1::before { background:var(--accent1); }
-  .project-card.p2::before { background:var(--accent2); }
-  .project-card.p3::before { background:var(--accent3); }
-  .project-card.p4::before { background:var(--accent5); }
-  .project-card:hover { transform:translateY(-4px); border-color:transparent; }
-  .project-card.p1:hover { box-shadow:0 12px 40px rgba(255,107,53,0.2); }
-  .project-card.p2:hover { box-shadow:0 12px 40px rgba(124,58,237,0.2); }
-  .project-card.p3:hover { box-shadow:0 12px 40px rgba(5,150,105,0.2); }
-  .project-card.p4:hover { box-shadow:0 12px 40px rgba(37,99,235,0.2); }
-  .project-card:hover::before { opacity:0.15; }
-  .project-badge { display:inline-flex; align-items:center; gap:6px; font-size:0.68rem; font-weight:700; padding:5px 12px; border-radius:99px; margin-bottom:18px; letter-spacing:0.06em; text-transform:uppercase; }
-  .badge-live { background:#fff0ea; color:var(--accent1); border:1.5px solid #ffd4c0; }
-  .badge-internship { background:#f5f0ff; color:var(--accent2); border:1.5px solid #ddd0ff; }
-  .badge-grad { background:#f0fdf7; color:var(--accent3); border:1.5px solid #c0f0dd; }
-  .badge-ml { background:#eff6ff; color:var(--accent5); border:1.5px solid #bfdbfe; }
-  .project-title { font-size:1.25rem; font-weight:800; margin-bottom:10px; letter-spacing:-0.02em; }
-  .project-desc { font-size:0.85rem; color:var(--muted); line-height:1.8; margin-bottom:22px; font-weight:500; }
-  .project-stack { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:24px; }
-  .stack-tag { font-family:'DM Mono',monospace; font-size:0.68rem; font-weight:500; color:var(--muted); background:var(--bg2); border:1.5px solid var(--border); padding:4px 10px; border-radius:6px; }
-  .project-links { display:flex; gap:14px; }
-  .project-link { font-size:0.78rem; font-weight:700; color:var(--muted); text-decoration:none; display:flex; align-items:center; gap:5px; transition:color 0.2s; }
-  .project-link.p1:hover { color:var(--accent1); }
-  .project-link.p2:hover { color:var(--accent2); }
-  .project-link.p3:hover { color:var(--accent3); }
-  .project-link.p4:hover { color:var(--accent5); }
-  .skills-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:16px; }
-  .skill-group { background:var(--bg); border:1.5px solid var(--border); border-radius:16px; padding:24px; transition:all 0.2s; }
-  .skill-group:hover { border-color:var(--accent2); transform:translateY(-2px); }
-  .skill-group-icon { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.1rem; margin-bottom:14px; }
-  .si1 { background:#fff0ea; } .si2 { background:#f5f0ff; } .si3 { background:#f0fdf7; } .si4 { background:#fff0f7; }
-  .skill-group-title { font-size:0.82rem; font-weight:700; color:var(--text); margin-bottom:14px; letter-spacing:0.01em; }
-  .skill-list { display:flex; flex-wrap:wrap; gap:7px; }
-  .skill-pill { font-family:'DM Mono',monospace; font-size:0.7rem; font-weight:500; color:var(--muted); background:var(--bg2); border:1.5px solid var(--border); padding:4px 11px; border-radius:6px; }
-  .timeline { display:flex; flex-direction:column; gap:0; }
-  .timeline-item { display:grid; grid-template-columns:160px auto 1fr; gap:0 24px; padding-bottom:44px; }
-  .timeline-item:last-child { padding-bottom:0; }
-  .timeline-date { font-family:'DM Mono',monospace; font-size:0.75rem; color:var(--muted); text-align:right; padding-top:3px; font-weight:500; }
-  .timeline-dot-col { display:flex; flex-direction:column; align-items:center; gap:0; }
-  .timeline-dot { width:12px; height:12px; border-radius:50%; background:var(--accent1); margin-top:4px; flex-shrink:0; box-shadow:0 0 0 3px var(--bg3); }
-  .timeline-line-seg { flex:1; width:2px; background:var(--border); margin-top:4px; }
-  .timeline-item:last-child .timeline-line-seg { display:none; }
-  .timeline-title { font-size:1rem; font-weight:800; margin-bottom:3px; }
-  .timeline-org { font-size:0.8rem; font-weight:700; color:var(--accent2); margin-bottom:8px; }
-  .timeline-desc { font-size:0.82rem; color:var(--muted); line-height:1.8; font-weight:500; }
-  .contact-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; max-width:900px; }
-  .contact-item { background:var(--bg); border:1.5px solid var(--border); border-radius:16px; padding:22px; text-decoration:none; color:var(--text); transition:all 0.2s; display:flex; flex-direction:column; gap:6px; }
-  .contact-item:hover { transform:translateY(-3px); }
-  .contact-item.ci1:hover { border-color:var(--accent1); box-shadow:0 8px 24px rgba(255,107,53,0.15); }
-  .contact-item.ci2:hover { border-color:var(--accent2); box-shadow:0 8px 24px rgba(124,58,237,0.15); }
-  .contact-item.ci3:hover { border-color:var(--accent4); box-shadow:0 8px 24px rgba(219,39,119,0.15); }
-  .contact-item.ci4:hover { border-color:var(--accent5); box-shadow:0 8px 24px rgba(37,99,235,0.15); }
-  .contact-platform { font-size:0.68rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; }
-  .ci1 .contact-platform { color:var(--accent1); }
-  .ci2 .contact-platform { color:var(--accent2); }
-  .ci3 .contact-platform { color:var(--accent4); }
-  .ci4 .contact-platform { color:var(--accent5); }
-  .contact-handle { font-size:0.88rem; font-weight:700; }
-  footer { position:relative; z-index:1; border-top:1.5px solid var(--border); padding:28px 60px; display:flex; justify-content:space-between; align-items:center; background:var(--bg2); }
-  footer p { font-size:0.78rem; font-weight:600; color:var(--muted); }
-  footer .heart { color:var(--accent4); }
-  @media(max-width:768px){
-    nav{padding:14px 20px;} .nav-links{display:none;}
-    .hero{padding:90px 20px 60px;}
-    .stats{padding:20px; flex-direction:column;}
-    .stat-item{border-right:none; border-bottom:1.5px solid var(--border); padding:16px 0;}
-    .stat-item:last-child{border-bottom:none;}
-    section{padding:60px 20px;}
-    footer{padding:20px; flex-direction:column; gap:8px; text-align:center;}
-    .timeline-item{grid-template-columns:1fr;}
-    .timeline-date{text-align:left;}
-    .timeline-dot-col{display:none;}
-    .contact-grid{grid-template-columns:1fr 1fr;}
-  }
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Danah Alsarrani — Junior Developer</title>
+  <meta name="description"
+    content="Portfolio of Danah Alsarrani — junior developer focused on AI, LLMs, and Java. Based in the Kingdom of Saudi Arabia." />
+  <meta name="theme-color" content="#0b0f10" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Danah Alsarrani — Junior Developer" />
+  <meta property="og:description"
+    content="AI & LLM specialist · Java developer · CS graduate. Open to junior developer opportunities." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="script.js" defer></script>
 </head>
+
 <body>
+  <div class="scanlines" aria-hidden="true"></div>
 
-<nav>
-  <div class="nav-logo">⋆. 𐙚˚࿔ danah.dev 𝜗𝜚˚⋆</div>
-  <ul class="nav-links">
-    <li><a href="#projects">projects</a></li>
-    <li><a href="#skills">skills</a></li>
-    <li><a href="#experience">experience</a></li>
-    <li><a href="#contact">contact</a></li>
-  </ul>
-</nav>
+  <header class="topbar">
+    <a class="topbar__logo" href="#top">
+      <span class="prompt">$</span> danah -dev
+    </a>
+    <nav class="topbar__nav" aria-label="Primary">
+      <a href="#about">~/about</a>
+      <a href="#skills">~/skills</a>
+      <a href="#projects">~/projects</a>
+      <a href="#contact">~/connect</a>
+    </nav>
+  </header>
 
-<section class="hero">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="blob blob-3"></div>
-  <div class="hero-content">
-    <div class="hero-greeting">
-      <span class="dot"></span>
-      available via email
-    </div>
-    <h1>
-      Hi, I'm Danah<br>
-      <em>Al-Sarrani</em> ⋆˚꩜｡
-    </h1>
-    <p class="hero-sub">
-      I build AI systems that actually work! RAG pipelines, LLM evaluation tools,
-      and deployed applications backed by real data. Fresh CS grad, full-time builder.
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="terminal">
+        <div class="terminal__bar" aria-hidden="true">
+          <span class="dot dot--red"></span>
+          <span class="dot dot--yellow"></span>
+          <span class="dot dot--green"></span>
+          <span class="terminal__title">danah@portfolio:~</span>
+        </div>
+        <div class="terminal__body">
+          <p class="line">
+            <span class="prompt">visitor@portfolio</span>:<span class="path">~</span>$ <span id="hero-typed"
+              class="typed"></span><span class="cursor" aria-hidden="true">▌</span>
+          </p>
+          <h1 id="hero-title" class="hero__name">Danah Alsarrani</h1>
+          <p class="hero__role">
+            <span class="tag tag--green">junior developer</span>
+            <span class="tag">ai &amp; llm</span>
+            <span class="tag">java</span>
+            <span class="tag">genai</span>
+          </p>
+          <p class="hero__sub">
+            Java developer building reliable, production‑ready AI systems
+            and backend services, with practical ML/NLP experience and deployable demos.
+          <p class="hero__cta">
+            <a class="btn" href="#projects">view projects →</a>
+            <a class="btn btn--ghost" href="#contact">get in touch</a>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" aria-labelledby="about-title">
+      <h2 id="about-title" class="section__title">
+        <span class="prompt">~/about</span> $ cat bio.txt
+      </h2>
+      <div class="section__body">
+        <p>
+          I'm a Computer Science graduate and Java developer who builds
+          reliable, production‑ready AI systems and backend services. I combine strong
+          Java and backend engineering with practical ML and NLP work, shipping containerized demos,
+          REST APIs, and clean, testable code.
+        </p>
+        <p>
+          I enjoy building safety tools (prompt evaluation, content filtering) and applied NLP systems
+          (sentiment analysis, summarization, OCR pipelines), and I work across the stack to deliver maintainable,
+          deployable solutions that solve real problems.
+        </p>
+        <ul class="meta-list">
+          <li><span>degree</span> B.Sc. Computer Science</li>
+          <li><span>languages</span> Arabic (Native) · English (IELTS)</li>
+          <li><span>skills</span> Remote Collaboration · Technical Writing · Problem Solving</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- STATS -->
+    <section class="section" aria-labelledby="stats-title">
+      <h2 id="stats-title" class="section__title">
+        <span class="prompt">~/stats</span> $ gh user dralsarrani
+      </h2>
+      <ul class="stats">
+        <li><strong>286K</strong><span>rows in datasets</span></li>
+        <li><strong>96.07%</strong><span>best model accuracy</span></li>
+        <li><strong>4</strong><span>projects built</span></li>
+        <li><strong>2</strong><span>live deployed apps</span></li>
+      </ul>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section" aria-labelledby="skills-title">
+      <h2 id="skills-title" class="section__title">
+        <span class="prompt">~/skills</span> $ ls --grouped
+      </h2>
+      <div class="skills-grid">
+        <div class="skill-card">
+          <h3>languages</h3>
+          <ul>
+            <li>Java</li>
+            <li>Python</li>
+            <li>C</li>
+            <li>TypeScript</li>
+            <li>SQL</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>ai / ml</h3>
+          <ul>
+            <li>LLMs &amp; prompt engineering</li>
+            <li>RAG (retrieval-augmented generation)</li>
+            <li>Fine-tuning (AraBERT)</li>
+            <li>Sentiment analysis</li>
+            <li>OCR pipelines</li>
+            <li>Summarization</li>
+            <li>Prompt safety &amp; classification</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>core cs</h3>
+          <ul>
+            <li>OOP &amp; design patterns</li>
+            <li>Data structures</li>
+            <li>File I/O &amp; persistence</li>
+            <li>Systems-level C</li>
+          </ul>
+        </div>
+        <div class="skill-card">
+          <h3>tools</h3>
+          <ul>
+            <li>Git &amp; GitHub</li>
+            <li>Jupyter</li>
+            <li>Hugging Face</li>
+            <li>Linux / CLI</li>
+            <li>VS Code</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section" aria-labelledby="projects-title">
+      <h2 id="projects-title" class="section__title">
+        <span class="prompt">~/projects</span> $ ls -la featured/
+      </h2>
+      <div id="projects-grid" class="projects-grid">
+
+        <!-- PromptGuard -->
+
+        <article class="project">
+          <div class="project__head">
+            <span class="project__perms"></span>
+          </div>
+          <h3 class="project__name">
+            <a href="https://github.com/dralsarrani/PromptGuard-LLM-Prompt-Safety-Evaluator" target="_blank"
+              rel="noopener noreferrer">PromptGuard</a>
+          </h3>
+          <p class="project__desc">RAG-powered LLM safety evaluator with ChromaDB, OpenRouter API, and Gradio UI.
+            Detects unsafe prompts across 5 threat categories.</p>
+          <div class="project__links">
+            <a href="https://github.com/dralsarrani/PromptGuard-LLM-Prompt-Safety-Evaluator" target="_blank"
+              rel="noopener noreferrer">GitHub</a>
+            <a href="https://huggingface.co/spaces/dralsarrani/PromptGuard" target="_blank"
+              rel="noopener noreferrer">Demo</a>
+            <a href="https://huggingface.co/datasets/dralsarrani/prompt_safety_with_synthetic_labeled" target="_blank"
+              rel="noopener noreferrer">Dataset</a>
+          </div>
+          <div class="project__foot">
+            <span class="project__lang">
+              <span class="lang-dot lang-python" aria-hidden="true"></span>
+              Python
+            </span>
+            <span class="project__stars">★ 2</span>
+          </div>
+        </article>
+
+
+        <!-- AraReview -->
+        <article class="project">
+          <div class="project__head">
+            <span class="project__perms"></span>
+          </div>
+          <h3 class="project__name">
+            <a href="https://github.com/dralsarrani/AraReview" target="_blank" rel="noopener noreferrer">AraReview</a>
+          </h3>
+          <p class="project__desc">Fine-tuned AraBERT for Arabic sentiment analysis on 105K hotel reviews. Achieved
+            96.07% accuracy with FastAPI deployment.</p>
+          <div class="project__links">
+            <a href="https://github.com/dralsarrani/AraReview" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a href="https://dralsarrani.github.io/AraReview/" target="_blank" rel="noopener noreferrer">Demo</a>
+            <a href="https://huggingface.co/dralsarrani/arareview" target="_blank" rel="noopener noreferrer">Model</a>
+            <a href="https://huggingface.co/datasets/dralsarrani/AraReview" target="_blank"
+              rel="noopener noreferrer">Dataset</a>
+          </div>
+          <div class="project__foot">
+            <span class="project__lang">
+              <span class="lang-dot lang-python" aria-hidden="true"></span>
+              Python
+            </span>
+          </div>
+        </article>
+
+        <!-- Security Layer for LLMs -->
+        <article class="project">
+          <div class="project__head">
+            <span class="project__perms">Internship project</span>
+            <span></span>
+            <span></span>
+          </div>
+          <h3 class="project__name">
+            <a href="https://github.com/dralsarrani/Security-Layer-for-LLMs" target="_blank"
+              rel="noopener noreferrer">Security Layer for LLMs</a>
+          </h3>
+          <p class="project__desc">Hybrid Logistic Regression + BiLSTM classifier achieving 93.4% accuracy for real-time
+            prompt safety filtering with UI.</p>
+          <div class="project__links">
+            <a href="https://github.com/dralsarrani/Security-Layer-for-LLMs" target="_blank"
+              rel="noopener noreferrer">GitHub</a>
+          </div>
+          <div class="project__foot">
+            <span class="project__lang">
+              <span class="lang-dot lang-python" aria-hidden="true"></span>
+              Python
+            </span>
+            <span class="project__stars"></span>
+          </div>
+        </article>
+
+
+        <!-- Prompt Aggregation Dataset -->
+        <article class="project">
+          <div class="project__head">
+            <span class="project__perms"></span>
+            <span></span>
+            <span></span>
+          </div>
+          <h3 class="project__name">
+            <a href="https://github.com/dralsarrani/Prompt-Aggregation-Dataset---Custom-Dataset" target="_blank"
+              rel="noopener noreferrer">Prompt Aggregation Dataset</a>
+          </h3>
+          <p class="project__desc">Curated 181K prompt safety dataset with 5 threat categories, aggregated from multiple
+            benchmark sources for LLM safety research.</p>
+          <div class="project__links">
+            <a href="https://github.com/dralsarrani/Prompt-Aggregation-Dataset---Custom-Dataset" target="_blank"
+              rel="noopener noreferrer">GitHub</a>
+            <a href="https://huggingface.co/datasets/dralsarrani/prompt_safety" target="_blank"
+              rel="noopener noreferrer">Dataset</a>
+          </div>
+          <div class="project__foot">
+            <span class="project__lang">
+              <span class="lang-dot lang-python" aria-hidden="true"></span>
+              Python
+            </span>
+            <span class="project__stars">★ 1</span>
+          </div>
+        </article>
+
+        <!-- Medical Records Summarization -->
+        <article class="project">
+          <div class="project__head">
+            <span class="project__perms">Graduation project</span>
+          </div>
+          <h3 class="project__name">
+            <a href="https://github.com/dralsarrani/Medical-Records-Summarization" target="_blank"
+              rel="noopener noreferrer">Medical Records Summarization</a>
+          </h3>
+          <p class="project__desc">NLP-powered system that summarizes patient medical records to extract key clinical
+            information for healthcare practitioners.</p>
+          <div class="project__links">
+            <a href="https://github.com/dralsarrani/Medical-Records-Summarization" target="_blank"
+              rel="noopener noreferrer">GitHub</a>
+          </div>
+          <div class="project__foot">
+            <span class="project__lang">
+              <span class="lang-dot lang-python" aria-hidden="true"></span>
+              Python
+            </span>
+            <span class="project__stars"></span>
+          </div>
+        </article>
+
+
+
+        <!-- BankApp -->
+        <article class="project">
+          <div class="project__head">
+          </div>
+          <h3 class="project__name">
+            <a href="https://github.com/dralsarrani/BankApp" target="_blank" rel="noopener noreferrer">BankApp</a>
+          </h3>
+          <p class="project__desc">Console-based banking application demonstrating OOP concepts with savings/checking
+            accounts, transactions, and file persistence.</p>
+          <div class="project__links">
+            <a href="https://github.com/dralsarrani/BankApp" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+          <div class="project__foot">
+            <span class="project__lang">
+              <span class="lang-dot lang-java" aria-hidden="true"></span>
+              Java
+            </span>
+            <span class="project__stars"></span>
+          </div>
+        </article>
+
+        <!-- Expense Tracker -->
+        <article class="project">
+          <div class="project__head">
+          </div>
+          <h3 class="project__name">
+            <a href="https://github.com/dralsarrani/Expense-Tracker-Java" target="_blank"
+              rel="noopener noreferrer">Expense Tracker</a>
+          </h3>
+          <p class="project__desc">Console-based expense tracker with file persistence, category management, and total
+            calculation, Java fundamentals practice.</p>
+          <div class="project__links">
+            <a href="https://github.com/dralsarrani/Expense-Tracker-Java" target="_blank"
+              rel="noopener noreferrer">GitHub</a>
+          </div>
+          <div class="project__foot">
+            <span class="project__lang">
+              <span class="lang-dot lang-java" aria-hidden="true"></span>
+              Java
+            </span>
+            <span class="project__stars"></span>
+          </div>
+        </article>
+
+
+
+      </div>
+      <p class="projects-foot">
+        <a href="https://github.com/dralsarrani?tab=repositories" target="_blank" rel="noopener noreferrer">see all
+          public repos on github →</a>
+      </p>
+    </section>
+
+    
+
+
+    <!-- WHERE I'VE BEEN -->
+    <section id="experience" class="section" aria-labelledby="experience-title">
+      <h2 id="experience-title" class="section__title">
+        <span class="prompt">~/where i've been</span> $ cat history.txt
+      </h2>
+      <div class="section__body">
+
+        <!-- Experience 1 -->
+        <div class="exp-item">
+          <div class="exp-head">
+            <span class="exp-date">Nov 2025</span>
+            <span class="exp-role">AI Engineer Intern</span>
+            <span class="exp-company">Beam Data</span>
+          </div>
+          <p class="exp-desc">Built a security layer for LLMs that detects and blocks harmful prompts before response
+            generation. Developed a hybrid BiLSTM + Logistic Regression classifier achieving 93.4% accuracy on a 181k
+            prompt dataset.</p>
+        </div>
+
+        <!-- Experience 2 -->
+        <div class="exp-item">
+          <div class="exp-head">
+            <span class="exp-date">Nov 2025</span>
+            <span class="exp-role">Generative AI Bootcamp</span>
+            <span class="exp-company">Saudi Digital Academy × WeCloudData</span>
+          </div>
+          <p class="exp-desc">Intensive program covering Generative AI fundamentals, prompt engineering, and ethical AI
+            practices.</p>
+        </div>
+
+        <!-- Experience 3 -->
+        <div class="exp-item">
+          <div class="exp-head">
+            <span class="exp-date">May 2025</span>
+            <span class="exp-role">B.S. Computer Science (Honours)</span>
+            <span class="exp-company">University of Taibah</span>
+          </div>
+          <p class="exp-desc">Coursework: Artificial Intelligence, Algorithms, Computational Theory, Comparison of
+            Learning Algorithms, Software Foundations.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <h2 id="contact-title" class="section__title">
+        <span class="prompt">~/connect</span> $ ./hire.sh
+      </h2>
+      <p class="contact-lead">
+        Looking for a junior developer who ships, learns fast, and writes
+        readable code? 
+      </p>
+      <ul class="contact-list">
+        <li>
+          <span class="key">email</span>
+          <a href="mailto:dralsarrani@outlook.com" target="_blank" rel="noopener noreferrer">dralsarrani@outlook.com</a>
+        </li>
+        <li>
+          <span class="key">github</span>
+          <a href="https://github.com/dralsarrani" target="_blank" rel="noopener noreferrer">github.com/dralsarrani</a>
+        </li>
+        <li>
+          <span class="key">linkedin</span>
+          <a href="https://linkedin.com/in/dralsarrani" target="_blank"
+            rel="noopener noreferrer">linkedin.com/in/dralsarrani</a>
+        </li>
+        <li>
+          <span class="key">huggingface</span>
+          <a href="https://huggingface.co/dralsarrani" target="_blank"
+            rel="noopener noreferrer">huggingface.co/dralsarrani</a>
+        </li>
+        
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>
+      <span class="prompt">$</span> echo "built by danah · <span id="year"></span>" &amp;&amp; exit 0
     </p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn btn-primary">⤷ ゛see my work ˎˊ˗</a>
-      <a href="https://github.com/dralsarrani" target="_blank" class="btn btn-outline">GitHub</a>
-      <a href="https://huggingface.co/dralsarrani" target="_blank" class="btn btn-outline">HuggingFace</a>
-    </div>
-  </div>
-</section>
-
-<div class="stats">
-  <div class="stat-item">
-    <span class="stat-value c1">286k</span>
-    <span class="stat-label">rows in datasets</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-value c2">4</span>
-    <span class="stat-label">projects built</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-value c3">96.07%</span>
-    <span class="stat-label">best model accuracy</span>
-  </div>
-  <div class="stat-item">
-    <span class="stat-value c4">2</span>
-    <span class="stat-label">live deployed apps</span>
-  </div>
-</div>
-
-<section id="projects">
-  <div class="section-header">
-    <span class="section-pill">૮꒰ ˶• ༝ •˶꒱ა ♡ projects</span>
-    <h2 class="section-title">Things I've built</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="projects-grid">
-
-    <div class="project-card p1">
-      <span class="project-badge badge-live">● live</span>
-      <h3 class="project-title">PromptGuard</h3>
-      <p class="project-desc">LLM prompt safety evaluator powered by RAG + LLM judge. Retrieves similar prompts from a 181k dataset, reasons through context, and returns a structured verdict with category, confidence score, and explanation.</p>
-      <div class="project-stack">
-        <span class="stack-tag">RAG</span>
-        <span class="stack-tag">ChromaDB</span>
-        <span class="stack-tag">sentence-transformers</span>
-        <span class="stack-tag">OpenRouter</span>
-        <span class="stack-tag">Gradio</span>
-        <span class="stack-tag">HuggingFace</span>
-      </div>
-      <div class="project-links">
-        <a href="https://huggingface.co/spaces/dralsarrani/PromptGuard" target="_blank" class="project-link p1">↗ live demo</a>
-        <a href="https://github.com/dralsarrani/PromptGuard-LLM-Prompt-Safety-Evaluator" target="_blank" class="project-link p1">↗ github</a>
-      </div>
-    </div>
-
-    <div class="project-card p4">
-      <span class="project-badge badge-ml">● live · arabic nlp</span>
-      <h3 class="project-title">AraReview</h3>
-      <p class="project-desc">Fine-tuned AraBERT on 105,698 Arabic hotel reviews achieving 96.07% accuracy and 0.96 F1-score, outperforming a TF-IDF baseline by +5.56%. Full pipeline: data cleaning, model training, evaluation framework, FastAPI backend, and Arabic web interface.</p>
-      <div class="project-stack">
-        <span class="stack-tag">AraBERT</span>
-        <span class="stack-tag">HuggingFace</span>
-        <span class="stack-tag">FastAPI</span>
-        <span class="stack-tag">PyTorch</span>
-        <span class="stack-tag">Python</span>
-        <span class="stack-tag">Arabic NLP</span>
-      </div>
-      <div class="project-links">
-        <a href="https://dralsarrani.github.io/AraReview/" target="_blank" class="project-link p4">↗ live demo</a>
-        <a href="https://github.com/dralsarrani/AraReview" target="_blank" class="project-link p4">↗ github</a>
-        <a href="https://huggingface.co/dralsarrani/arabert-sentiment" target="_blank" class="project-link p4">↗ model</a>
-      </div>
-    </div>
-
-    <div class="project-card p2">
-      <span class="project-badge badge-internship">internship · beam data</span>
-      <h3 class="project-title">Security Layer for LLMs</h3>
-      <p class="project-desc">Hybrid classifier that detects and blocks harmful prompts before response generation. Collected, structured, and labeled a 181k prompt dataset, helped train a combined Logistic Regression + BiLSTM model achieving 93.4% accuracy.</p>
-      <div class="project-stack">
-        <span class="stack-tag">BiLSTM</span>
-        <span class="stack-tag">Logistic Regression</span>
-        <span class="stack-tag">NLP</span>
-        <span class="stack-tag">TensorFlow</span>
-        <span class="stack-tag">Python</span>
-      </div>
-      <div class="project-links">
-        <a href="https://github.com/dralsarrani/Security-Layer-for-LLMs" target="_blank" class="project-link p2">↗ github</a>
-      </div>
-    </div>
-
-    <div class="project-card p3">
-      <span class="project-badge badge-grad">graduation project</span>
-      <h3 class="project-title">Medical Record Summarization</h3>
-      <p class="project-desc">System that automatically condenses lengthy patient records into concise, structured summaries, reducing information overload for medical professionals.</p>
-      <div class="project-stack">
-        <span class="stack-tag">Python</span>
-        <span class="stack-tag">NLP</span>
-        <span class="stack-tag">JavaScript</span>
-        <span class="stack-tag">HTML/CSS</span>
-      </div>
-      <div class="project-links">
-        <a href="https://github.com/dralsarrani/Medical-Records-Summarization" target="_blank" class="project-link p3">↗ github</a>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<section id="skills" style="background:var(--bg2);border-top:1.5px solid var(--border);border-bottom:1.5px solid var(--border);">
-  <div class="section-header">
-    <span class="section-pill">૮₍｡´ᴖ ˔ ᴖ`｡₎ა skills</span>
-    <h2 class="section-title">What I work with</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="skills-grid">
-    <div class="skill-group">
-      <div class="skill-group-icon si1">🤖</div>
-      <div class="skill-group-title">AI & Machine Learning</div>
-      <div class="skill-list">
-        <span class="skill-pill">RAG Pipelines</span>
-        <span class="skill-pill">LLM APIs</span>
-        <span class="skill-pill">Fine-tuning</span>
-        <span class="skill-pill">Prompt Engineering</span>
-        <span class="skill-pill">NLP</span>
-        <span class="skill-pill">TensorFlow</span>
-        <span class="skill-pill">PyTorch</span>
-        <span class="skill-pill">Scikit-learn</span>
-        <span class="skill-pill">HuggingFace</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-icon si2">🗄️</div>
-      <div class="skill-group-title">Data & Vector DBs</div>
-      <div class="skill-list">
-        <span class="skill-pill">ChromaDB</span>
-        <span class="skill-pill">sentence-transformers</span>
-        <span class="skill-pill">Pandas</span>
-        <span class="skill-pill">NumPy</span>
-        <span class="skill-pill">Arabic NLP</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-icon si3">🚀</div>
-      <div class="skill-group-title">Dev & Deployment</div>
-      <div class="skill-list">
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">FastAPI</span>
-        <span class="skill-pill">Gradio</span>
-        <span class="skill-pill">HuggingFace Spaces</span>
-        <span class="skill-pill">Docker</span>
-        <span class="skill-pill">Git</span>
-        <span class="skill-pill">JavaScript</span>
-        <span class="skill-pill">HTML/CSS</span>
-      </div>
-    </div>
-    <div class="skill-group">
-      <div class="skill-group-icon si4">🛠️</div>
-      <div class="skill-group-title">Tools & Platforms</div>
-      <div class="skill-list">
-        <span class="skill-pill">Google Colab</span>
-        <span class="skill-pill">Jupyter</span>
-        <span class="skill-pill">VS Code</span>
-        <span class="skill-pill">OpenRouter API</span>
-        <span class="skill-pill">Anaconda</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="experience">
-  <div class="section-header">
-    <span class="section-pill">૮₍´˶• . • ⑅ ₎ა experience</span>
-    <h2 class="section-title">Where I've been</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="timeline">
-    <div class="timeline-item">
-      <div class="timeline-date">Nov 2025</div>
-      <div class="timeline-dot-col"><div class="timeline-dot"></div><div class="timeline-line-seg"></div></div>
-      <div class="timeline-content">
-        <div class="timeline-title">AI Engineer Intern</div>
-        <div class="timeline-org">Beam Data</div>
-        <div class="timeline-desc">Built a security layer for LLMs that detects and blocks harmful prompts before response generation. Developed a hybrid BiLSTM + Logistic Regression classifier achieving 93.4% accuracy on a 181k prompt dataset.</div>
-      </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-date">Nov 2025</div>
-      <div class="timeline-dot-col"><div class="timeline-dot"></div><div class="timeline-line-seg"></div></div>
-      <div class="timeline-content">
-        <div class="timeline-title">Generative AI Bootcamp</div>
-        <div class="timeline-org">Saudi Digital Academy × WeCloudData</div>
-        <div class="timeline-desc">Intensive program covering Generative AI fundamentals, prompt engineering, and ethical AI practices.</div>
-      </div>
-    </div>
-    <div class="timeline-item">
-      <div class="timeline-date">May 2025</div>
-      <div class="timeline-dot-col"><div class="timeline-dot"></div><div class="timeline-line-seg"></div></div>
-      <div class="timeline-content">
-        <div class="timeline-title">B.S. Computer Science (Honours)</div>
-        <div class="timeline-org">University of Taibah</div>
-        <div class="timeline-desc">Coursework: Artificial Intelligence, Algorithms, Computational Theory, Comparison of Learning Algorithms, Software Foundations.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="contact" style="background:var(--bg2);border-top:1.5px solid var(--border);">
-  <div class="section-header">
-    <span class="section-pill">૮ ˶ᵔ ᵕ ᵔ˶ ა contact</span>
-    <h2 class="section-title">Let's connect</h2>
-    <div class="section-line"></div>
-  </div>
-  <div class="contact-grid">
-    <a href="mailto:dralsarrani@outlook.com" class="contact-item ci1">
-      <span class="contact-platform">email</span>
-      <span class="contact-handle">dralsarrani@outlook.com</span>
-    </a>
-    <a href="https://www.linkedin.com/in/danah-alsarrani-129734391" target="_blank" class="contact-item ci2">
-      <span class="contact-platform">linkedin</span>
-      <span class="contact-handle">danah-alsarrani</span>
-    </a>
-    <a href="https://github.com/dralsarrani" target="_blank" class="contact-item ci3">
-      <span class="contact-platform">github</span>
-      <span class="contact-handle">dralsarrani</span>
-    </a>
-    <a href="https://huggingface.co/dralsarrani" target="_blank" class="contact-item ci4">
-      <span class="contact-platform">huggingface</span>
-      <span class="contact-handle">dralsarrani</span>
-    </a>
-  </div>
-</section>
-
-<footer>
-  <p>Danah Al-Sarrani · AI Engineer · 2026</p>
-  <p>made with <span class="heart">-`♡´-</span> and a lot of coffee</p>
-</footer>
-
-<script>
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.style.opacity = '1';
-        entry.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.08 });
-  document.querySelectorAll('.project-card, .skill-group, .timeline-item, .contact-item').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
-  });
-</script>
+  </footer>
 </body>
+
 </html>
